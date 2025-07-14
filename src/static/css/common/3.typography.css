@@ -1,0 +1,65 @@
+body {
+  font-family: var(--fontStackBody);
+  font-weight: 300;
+  line-height: 1.4;
+
+  @media (--medium-viewport) {
+    font-size: 1.2em;
+  }
+}
+.layout__inner {
+  max-width: var(--textMaxWidth);
+  font-size: 1.2em;
+
+  @media (--medium-viewport) {
+    line-height: 1.6;
+  }
+}
+
+strong {
+  font-weight: 500;
+}
+em {
+  font-style: italic;
+}
+
+p.small {
+  font-style: italic;
+}
+h1 + p,
+h2 + p,
+h3 + p {
+  margin-top: 0.25em;
+}
+
+a,
+a:hover,
+a:active {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  margin-bottom: 0;
+  font-family: var(--fontStackHeader);
+  font-weight: 500;
+  line-height: 1.2;
+
+  font-size: 1.6em;
+  @media (--medium-viewport) {
+    font-size: 2em;
+  }
+}
+h2 {
+  font-size: 1.6em;
+}
+h3 {
+  font-size: 1.4em;
+}
+
+blockquote {
+  margin-left: 1em;
+  border-left: 2px gray solid;
+  padding-left: 1em;
+}

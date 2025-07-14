@@ -1,0 +1,10 @@
+.layout__outer {
+  padding: 1em;
+  @media (--medium-viewport) {
+    padding: 2em;
+  }
+}
+
+.layout__inner {
+  margin: 0 auto;
+}

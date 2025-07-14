@@ -1,0 +1,42 @@
+{
+  "name": "BelastRijkdom.nl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo \"Error: not implemented\" && exit 1",
+    "build": "node -e \"const { build } = require('./build.js'); build();\"",
+    "postversion": "git push && git push --tags",
+    "deploy": "npm version minor -m \"chore: Release version %s\" && npm run build && gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BelastRijkdom-nl/BelastRijkdom.nl.git"
+  },
+  "homepage": "https://BelastRijkdom.nl/",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "gh-pages": "^6.3.0",
+    "glob": "^11.0.3",
+    "nunjucks": "^3.2.4",
+    "nunjucks-date-filter": "^0.1.1",
+    "postcss": "^8.5.6",
+    "postcss-cssnext": "^3.1.1",
+    "postcss-import": "^16.1.1",
+    "prettier": "^3.6.2",
+    "shell": "^0.12.0",
+    "shelljs": "^0.10.0"
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true,
+    "importOrder": [
+      "<THIRD_PARTY_MODULES>"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
+  }
+}
