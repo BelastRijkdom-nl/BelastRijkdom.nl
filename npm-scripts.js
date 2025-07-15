@@ -5,6 +5,7 @@ const path = require('path')
 
 const shell = require('shelljs')
 const glob = require('glob').sync
+const chokidar = require('chokidar')
 const postcss = require('postcss')
 const postcssCssnext = require('postcss-cssnext')
 const postcssImport = require('postcss-import')
@@ -36,6 +37,23 @@ module.exports.build = function build() {
     () => console.log('All done.'),
   ]
   runCallbackChain(pipeline)
+}
+
+module.exports.watch = function watch() {
+  chokidar
+    .watch(config.src, { ignoreInitial: true })
+    .on('all', (_event, path) => {
+      const cb = () => {}
+      if (path.endsWith('.css')) {
+        decorateLogs(compileCSS, 'compile-css')(cb)
+      } else if (path.endsWith('.njk') || path.endsWith('/data.json')) {
+        decorateLogs(compileHTML, 'compile-html')(cb)
+      } else if (path.startsWith(`${__dirname}/src/static/img/`)) {
+        decorateLogs(copyImages, 'copy-img')(cb)
+      } else {
+        module.exports.build()
+      }
+    })
 }
 
 function clean(cb) {
