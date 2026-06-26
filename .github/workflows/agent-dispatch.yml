@@ -1,0 +1,81 @@
+name: Agent Dispatch
+
+on:
+  issues:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agent-dispatch-${{ github.event.issue.number || github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    name: Dispatch agent
+    runs-on: ubuntu-latest
+    environment: agent
+    if: >-
+      (github.event_name == 'issues' && github.event.label.name == 'agent:task') ||
+      (github.event_name == 'issue_comment' &&
+      contains(github.event.comment.body, '@claude') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)) ||
+      (github.event_name == 'pull_request_review_comment' &&
+      contains(github.event.comment.body, '@claude') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association))
+    steps:
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Configure git identity
+        run: |
+          git config user.name "belastrijkdom-bot[bot]"
+          git config user.email "${{ secrets.BOT_APP_ID }}+belastrijkdom-bot[bot]@users.noreply.github.com"
+
+      - name: Set task prompt
+        id: task
+        run: |
+          if [ "${{ github.event_name }}" = "issues" ]; then
+            {
+              echo 'prompt<<EOF_PROMPT'
+              echo "Implement the task described in issue #${{ github.event.issue.number }}."
+              echo ""
+              echo "1. Create branch agent/issue-${{ github.event.issue.number }}"
+              echo "2. Make the minimal change that satisfies the issue"
+              echo "3. Run the full validation loop:"
+              echo "     npm run build && npm test && npm run test:schema &&"
+              echo "     npm run test:e2e && npm run lint &&"
+              echo "     npm audit --audit-level=critical --omit=dev"
+              echo "4. Fix any failures before proceeding — never suppress a check"
+              echo "5. Open a PR: gh pr create referencing \"Closes #${{ github.event.issue.number }}\""
+              echo 'EOF_PROMPT'
+            } >> "$GITHUB_OUTPUT"
+          else
+            echo "prompt=" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run Claude agent
+        uses: anthropics/claude-code-action@a92e7c70a4da9793dc164451d829089dc057a464
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ steps.app-token.outputs.token }}
+          system_prompt: |
+            You are an automated agent for BelastRijkdom.nl. Always read AGENTS.md in full
+            before taking any action. Never push directly to main. Never merge pull requests.
+            Never modify files under .github/workflows/. Branch naming: agent/issue-{N}.
+            All commits must use conventional commit format: type(scope): message.
+          prompt: ${{ steps.task.outputs.prompt }}
