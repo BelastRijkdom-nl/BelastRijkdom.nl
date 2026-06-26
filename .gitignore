@@ -3,3 +3,8 @@ dest
 node_modules
 
 .superpowers
+
+# test artefacts
+test-results/
+playwright-report/
+.playwright/
