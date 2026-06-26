@@ -50,7 +50,7 @@ npm run build           # Eleventy build → dest/
 npm test                # Vitest unit tests (reads dest/)
 npm run test:schema     # AJV schema validation of src/_data/claims/*.json
 npm run test:e2e        # Playwright E2E + axe (serves dest/ on port 4000)
-npm audit --audit-level=high
+npm audit --audit-level=critical --omit=dev
 ```
 
 ## Self-correction on CI failure

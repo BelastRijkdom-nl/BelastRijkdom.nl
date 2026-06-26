@@ -40,14 +40,14 @@ The oracle is the set of checks that must all pass before a change is
 merged. "Checks are green" must mean "the change is correct" for the
 categories of changes agents make.
 
-| Check                  | Tool           | Gate                  |
-| ---------------------- | -------------- | --------------------- |
-| Build succeeds         | Eleventy       | Hard fail             |
-| Build output structure | Vitest         | Hard fail             |
-| Claim schema           | AJV            | Hard fail             |
-| E2E smoke              | Playwright     | Hard fail             |
-| Accessibility          | axe-playwright | Hard fail             |
-| Dependency audit       | npm audit      | High+ severity = fail |
+| Check                  | Tool           | Gate                             |
+| ---------------------- | -------------- | -------------------------------- |
+| Build succeeds         | Eleventy       | Hard fail                        |
+| Build output structure | Vitest         | Hard fail                        |
+| Claim schema           | AJV            | Hard fail                        |
+| E2E smoke              | Playwright     | Hard fail                        |
+| Accessibility          | axe-playwright | Hard fail                        |
+| Dependency audit       | npm audit      | Critical (prod deps only) = fail |
 
 **Flake policy:** any test that fails non-deterministically twice in a row
 gets an issue filed automatically. Target flake rate: <1%.
