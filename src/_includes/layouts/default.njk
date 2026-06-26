@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="{{ lang or 'nl' }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ metaTitle }}</title>
+  {% if metaDescription %}<meta name="description" content="{{ metaDescription }}">{% endif %}
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="/static/css/all.css">
+  <link rel="icon" type="image/png" href="/static/img/icon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="/static/img/icon/favicon.svg" />
+  <link rel="shortcut icon" href="/static/img/icon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/img/icon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="{{ site.name }}" />
+  <link rel="manifest" href="/static/img/icon/site.webmanifest" />
+  {% for link in page.url | locale_links %}
+  <link rel="alternate" hreflang="{{ link.lang }}" href="{{ link.url }}">
+  {% endfor %}
+</head>
+<body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}>
+  <div class="layout__outer">
+    <header class="layout__inner header">
+      {%- block header %}
+        {% include 'components/header.njk' %}
+      {% endblock -%}
+    </header>
+
+    <main class="layout__inner">
+      {{ content | safe }}
+    </main>
+
+    <footer class="layout__inner footer">
+      {%- block footer %}
+        {% include 'components/footer.njk' %}
+      {% endblock -%}
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<a href="{{ '/' | locale_url(lang) }}" class="header__brand">{{ site.name }}</a>
+<nav class="lang-switcher" aria-label="Language">
+  {% for link in page.url | locale_links %}
+  <a href="{{ link.url }}" hreflang="{{ link.lang }}"{% if link.lang == lang %} aria-current="page"{% endif %}>{{ link.lang | upper }}</a>
+  {% endfor %}
+</nav>

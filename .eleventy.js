@@ -33,9 +33,10 @@ module.exports = function (eleventyConfig) {
     },
   })
 
-  // Passthrough: images, CNAME (root redirect added in Task 2 with src/index.html)
+  // Passthrough: images, CNAME, root redirect
   eleventyConfig.addPassthroughCopy({ 'src/static/img': 'static/img' })
   eleventyConfig.addPassthroughCopy({ CNAME: 'CNAME' })
+  eleventyConfig.addPassthroughCopy({ 'src/index.html': 'index.html' })
 
   return {
     templateFormats: ['njk', 'html', 'css'],
