@@ -206,3 +206,4 @@ The identity is identical across every commit the bot makes — first run, tenth
 - Auto-merge (L2 → L3 unlock condition — human decides on merge at L2)
 - Scheduled / signal-driven task generation (L3 feature)
 - Multiple parallel agent PRs (L2 mature target, not in scope here)
+- Per-PR token cost reporting — the `claude` CLI emits usage stats (`input_tokens`, `output_tokens`, cache hits) in `--output-format stream-json`. A post-processing step in each workflow could capture these and post a PR comment with the cost. ~20–30 lines of YAML, ~1 hour to implement. Deferred; spending cap + Anthropic usage dashboard covers cost control for now.
