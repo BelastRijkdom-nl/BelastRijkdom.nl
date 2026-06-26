@@ -33,6 +33,7 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
+          set -euo pipefail
           gh run view ${{ github.event.workflow_run.id }} --log-failed 2>&1 | head -300 > /tmp/ci-failure.log
           {
             echo 'log<<EOF_LOG'
