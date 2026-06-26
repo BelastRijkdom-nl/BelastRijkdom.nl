@@ -1,0 +1,17 @@
+{
+  "id": "vermogensongelijkheid-2023",
+  "claim": {
+    "nl": "De rijkste 1% bezit meer dan een kwart van al het vermogen in Nederland.",
+    "en": "The richest 1% owns more than a quarter of all wealth in the Netherlands."
+  },
+  "value": 0.26,
+  "unit": "fraction-of-total-wealth",
+  "source": {
+    "name": "CBS Vermogensstatistiek 2022",
+    "url": "https://www.cbs.nl/nl-nl/cijfers/detail/85064NED",
+    "accessed": "2026-06-26",
+    "type": "primary"
+  },
+  "verified": false,
+  "lastChecked": "2026-06-26"
+}
