@@ -3,4 +3,4 @@
 @import 'common/3.typography.css';
 @import 'common/4.layout.css';
 
-@import '../../components/header/header.css';
+@import 'components/header.css';
