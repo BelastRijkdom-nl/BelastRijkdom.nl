@@ -12,8 +12,9 @@ module.exports = defineConfig({
     port: 4000,
     reuseExistingServer: !process.env.CI,
   },
-  projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  reporter: [
+    ['list'],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
   ],
-  reporter: [['list'], ['html', { outputFolder: 'playwright-report', open: 'never' }]],
 })

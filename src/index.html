@@ -1,19 +1,22 @@
 <!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Belast Rijkdom</title>
-  <script>
-    (function () {
-      var lang = (navigator.language || navigator.userLanguage || 'nl').slice(0, 2)
-      window.location.replace(lang === 'nl' ? '/nl/' : '/en/')
-    })()
-  </script>
-  <noscript>
-    <meta http-equiv="refresh" content="0;url=/nl/">
-  </noscript>
-</head>
-<body>
-  <p><a href="/nl/">NL</a> | <a href="/en/">EN</a></p>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>Belast Rijkdom</title>
+    <script>
+      ;(function () {
+        var lang = (navigator.language || navigator.userLanguage || 'nl').slice(
+          0,
+          2,
+        )
+        window.location.replace(lang === 'nl' ? '/nl/' : '/en/')
+      })()
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/nl/" />
+    </noscript>
+  </head>
+  <body>
+    <p><a href="/nl/">NL</a> | <a href="/en/">EN</a></p>
+  </body>
 </html>

@@ -1,0 +1,6 @@
+dest/
+node_modules/
+docs/superpowers/
+src/static/img/icon/
+.superpowers/
+package-lock.json

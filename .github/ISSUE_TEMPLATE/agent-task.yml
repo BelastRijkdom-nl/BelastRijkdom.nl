@@ -1,6 +1,6 @@
 name: Agent task
 description: A structured task for an AI agent to execute
-labels: ["agent:task"]
+labels: ['agent:task']
 body:
   - type: markdown
     attributes:
@@ -13,7 +13,7 @@ body:
     attributes:
       label: Goal
       description: One sentence. What should exist or work after this task is done?
-      placeholder: "Add an English translation of the privacy page at /en/privacy/."
+      placeholder: 'Add an English translation of the privacy page at /en/privacy/.'
     validations:
       required: true
 
@@ -47,7 +47,7 @@ body:
     attributes:
       label: Constraints
       description: Anything the agent must not do, or edge cases to avoid.
-      placeholder: "Do not add unsourced figures. Keep the same layout as the NL version."
+      placeholder: 'Do not add unsourced figures. Keep the same layout as the NL version.'
     validations:
       required: false
 

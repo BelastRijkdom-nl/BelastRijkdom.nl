@@ -14,7 +14,9 @@ test.describe('Dutch site (/nl/)', () => {
   })
 
   test('Dutch tagline visible', async ({ page }) => {
-    await expect(page.locator('strong').first()).toContainText('Belast Rijkdom, niet werk')
+    await expect(page.locator('strong').first()).toContainText(
+      'Belast Rijkdom, niet werk',
+    )
   })
 
   test('html lang attribute is nl', async ({ page }) => {
@@ -47,7 +49,9 @@ test.describe('English site (/en/)', () => {
   })
 
   test('English tagline visible', async ({ page }) => {
-    await expect(page.locator('strong').first()).toContainText('Tax wealth, not labour')
+    await expect(page.locator('strong').first()).toContainText(
+      'Tax wealth, not labour',
+    )
   })
 
   test('html lang attribute is en', async ({ page }) => {

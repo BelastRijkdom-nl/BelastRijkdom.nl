@@ -56,6 +56,7 @@ npm audit --audit-level=high
 ## Self-correction on CI failure
 
 CI failure output is structured. On failure:
+
 1. Identify the failing step and file from CI logs
 2. Fix the root cause — do not suppress the check
 3. Push to the same branch to re-trigger CI
