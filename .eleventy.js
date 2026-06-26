@@ -1,14 +1,10 @@
-'use strict'
+import { EleventyI18nPlugin } from '@11ty/eleventy'
+import path from 'path'
+import postcss from 'postcss'
+import postcssImport from 'postcss-import'
+import postcssPresetEnv from 'postcss-preset-env'
 
-const path = require('path')
-const postcss = require('postcss')
-const postcssImport = require('postcss-import')
-const postcssPresetEnv = require('postcss-preset-env')
-
-const { EleventyI18nPlugin } = require('@11ty/eleventy')
-
-module.exports = function (eleventyConfig) {
-  // i18n: pages in src/nl/ → /nl/…, src/en/ → /en/…
+export default function (eleventyConfig) {
   eleventyConfig.addPlugin(EleventyI18nPlugin, {
     defaultLanguage: 'nl',
     errorMode: 'allow-fallback',
@@ -33,7 +29,6 @@ module.exports = function (eleventyConfig) {
     },
   })
 
-  // Passthrough: images, CNAME, root redirect
   eleventyConfig.addPassthroughCopy({ 'src/static/img': 'static/img' })
   eleventyConfig.addPassthroughCopy({ CNAME: 'CNAME' })
   eleventyConfig.addPassthroughCopy({ 'src/index.html': 'index.html' })

@@ -1,9 +1,7 @@
-'use strict'
+import { existsSync, readFileSync } from 'fs'
+import { resolve } from 'path'
 
-const { existsSync, readFileSync } = require('fs')
-const { resolve } = require('path')
-
-const dest = (p) => resolve(__dirname, '../../dest', p)
+const dest = (p) => resolve(import.meta.dirname, '../../dest', p)
 const read = (p) => readFileSync(dest(p), 'utf8')
 
 describe('build output — required files', () => {

@@ -1,7 +1,5 @@
-'use strict'
-
-const { test, expect } = require('@playwright/test')
-const { injectAxe, checkA11y } = require('axe-playwright')
+import { expect, test } from '@playwright/test'
+import { checkA11y, injectAxe } from 'axe-playwright'
 
 test.describe('Dutch site (/nl/)', () => {
   test.beforeEach(async ({ page }) => {

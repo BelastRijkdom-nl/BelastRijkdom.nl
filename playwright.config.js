@@ -1,8 +1,6 @@
-'use strict'
+import { defineConfig, devices } from '@playwright/test'
 
-const { defineConfig, devices } = require('@playwright/test')
-
-module.exports = defineConfig({
+export default defineConfig({
   testDir: 'tests/e2e',
   use: {
     baseURL: 'http://localhost:4000',

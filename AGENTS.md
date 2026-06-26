@@ -18,7 +18,7 @@ A human decides on merge.
 
 - Never use `superpowers` in a folder name for docs, specs, designs, or implementation plans.
 - **Spec and plan filenames do not include a date prefix.** Save them as `docs/specs/<topic>.md` and `docs/plans/<topic>.md`, not `docs/specs/YYYY-MM-DD-<topic>.md`.
-- `"type": "commonjs"` — all JS files use `module.exports` / `require()`, never `import`/`export`.
+- `"type": "module"` — all JS files use `import`/`export default`, never `require()`/`module.exports`.
 - No `>/dev/null 2>&1` — failures must be visible.
 - FOSS-only tooling. Flag any exception explicitly.
 - **Conventional commits:** use the format `type(scope): message`. Valid types: `feat`, `fix`, `docs`, `test`, `refactor`, `perf`, `chore`, `ci`, `security`. Include a scope when it makes sense (e.g. `build`, `i18n`, `content`, `a11y`, `deps`). Omit only when no single topic fits.

@@ -1,25 +1,23 @@
-'use strict'
-
-const fs = require('fs')
-const path = require('path')
-const Ajv = require('ajv').default
-const addFormats = require('ajv-formats').default
+import Ajv from 'ajv'
+import addFormats from 'ajv-formats'
+import { existsSync, readFileSync, readdirSync } from 'fs'
+import { join, resolve } from 'path'
 
 const ajv = new Ajv({ strict: true, allErrors: true })
 addFormats(ajv)
 
-const schemaPath = path.resolve(__dirname, 'claim.schema.json')
-const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'))
+const schemaPath = resolve(import.meta.dirname, 'claim.schema.json')
+const schema = JSON.parse(readFileSync(schemaPath, 'utf8'))
 const validate = ajv.compile(schema)
 
-const claimsDir = path.resolve(__dirname, '../../src/_data/claims')
+const claimsDir = resolve(import.meta.dirname, '../../src/_data/claims')
 
-if (!fs.existsSync(claimsDir)) {
+if (!existsSync(claimsDir)) {
   console.log('No claims directory; skipping.')
   process.exit(0)
 }
 
-const files = fs.readdirSync(claimsDir).filter((f) => f.endsWith('.json'))
+const files = readdirSync(claimsDir).filter((f) => f.endsWith('.json'))
 
 if (files.length === 0) {
   console.log('No claim files; skipping.')
@@ -29,8 +27,8 @@ if (files.length === 0) {
 let failures = 0
 
 for (const file of files) {
-  const filePath = path.join(claimsDir, file)
-  const data = JSON.parse(fs.readFileSync(filePath, 'utf8'))
+  const filePath = join(claimsDir, file)
+  const data = JSON.parse(readFileSync(filePath, 'utf8'))
 
   if (!validate(data)) {
     console.error(`FAIL  ${file}`)

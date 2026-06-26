@@ -10,7 +10,7 @@ BelastRijkdom.nl is a Netherlands-focused activist site arguing for shifting tax
 
 - Never use `superpowers` in a folder name for docs, specs, designs, or implementation plans.
 - **Spec and plan filenames do not include a date prefix.** Save them as `docs/specs/<topic>.md` and `docs/plans/<topic>.md`, not `docs/specs/YYYY-MM-DD-<topic>.md`. The superpowers skill suggests dated filenames — ignore that convention here.
-- `"type": "commonjs"` in `package.json` — all JS config and script files use `module.exports` / `require()`, never `import`/`export`.
+- `"type": "module"` in `package.json` — all JS config and script files use `import`/`export default`, never `require()`/`module.exports`.
 - No `>/dev/null 2>&1` — failures must be visible.
 - FOSS-only tooling. Flag any exception explicitly.
 - **Conventional commits:** use the format `type(scope): message`. Valid types: `feat`, `fix`, `docs`, `test`, `refactor`, `perf`, `chore`, `ci`, `security`. Include a scope when it makes sense — use a topic scope (e.g. `build`, `i18n`, `content`, `a11y`, `deps`). Omit the scope only when no single topic fits.
