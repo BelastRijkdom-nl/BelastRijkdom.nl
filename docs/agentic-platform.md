@@ -2,7 +2,7 @@
 
 _Living document. Updated when the platform level or architecture changes._
 
-**Last updated:** 2026-06-26
+**Last updated:** 2026-06-27
 **Current level:** L2 — agents open PRs; human decides on merge
 
 ---
@@ -30,7 +30,7 @@ _Living document. Updated when the platform level or architecture changes._
 | Unit tests   | Vitest 2.x                    | Tests build output correctness         |
 | E2E + a11y   | Playwright + axe-playwright   | Runs against built dest/               |
 | Schema       | AJV 8 + ajv-formats           | Validates src/\_data/claims/\*.json    |
-| Bot identity | GitHub App (TBD)              | Scoped, short-lived tokens; not a PAT  |
+| Bot identity | GitHub App (`belastrijkdom-bot`) | Scoped, short-lived tokens; `agent` Actions environment |
 
 ---
 
@@ -73,26 +73,27 @@ changes agents make with a flake rate <1%.
 
 ---
 
-## Bot identity (pending setup)
+## Bot identity
 
-A GitHub App (not a PAT) with these permissions:
+A custom GitHub App (`belastrijkdom-bot`) with a permanent numeric App ID
+stored as `BOT_APP_ID` in the `agent` Actions environment.
 
-- Contents: Write
-- Pull requests: Write
-- Checks: Write
-- Issues: Read
-- Metadata: Read
+**Repository permissions:**
+- Contents: Read and write
+- Pull requests: Read and write
+- Issues: Read-only
+- Actions: Read-only
+- Metadata: Read-only
 
-Short-lived installation tokens (1 hour) generated via JWT.
-Private key stored in GitHub Secrets (`BOT_APP_ID`, `BOT_PRIVATE_KEY`).
+Short-lived installation tokens (1 hour) generated via `actions/create-github-app-token`.
+Private key stored as `BOT_PRIVATE_KEY` in the `agent` Actions environment (not repo secrets).
 
-Setup steps (one-time, done by a human):
+**Git identity (stable across all commits):**
+`{APP_ID}+belastrijkdom-bot[bot]@users.noreply.github.com`
 
-1. GitHub → Settings → Developer settings → GitHub Apps → New GitHub App
-2. Set permissions as above
-3. Generate and download private key
-4. Install app on this repository
-5. Add `BOT_APP_ID` and `BOT_PRIVATE_KEY` to repository secrets
+**Workflows using this identity:**
+- `.github/workflows/agent-dispatch.yml` — issue label and @claude mention triggers
+- `.github/workflows/agent-self-correct.yml` — CI failure self-correction on `agent/*` branches
 
 ---
 
