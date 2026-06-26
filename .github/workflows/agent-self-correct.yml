@@ -1,0 +1,71 @@
+name: Agent Self-Correct
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches:
+      - "agent/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agent-self-correct-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: false
+
+jobs:
+  self-correct:
+    name: Self-correct CI failure
+    runs-on: ubuntu-latest
+    environment: agent
+    if: github.event.workflow_run.conclusion == 'failure'
+    steps:
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
+
+      - name: Fetch CI failure log
+        id: ci-log
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh run view ${{ github.event.workflow_run.id }} --log-failed 2>&1 | head -300 > /tmp/ci-failure.log
+          {
+            echo 'log<<EOF_LOG'
+            cat /tmp/ci-failure.log
+            echo 'EOF_LOG'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Checkout failing branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Configure git identity
+        run: |
+          git config user.name "belastrijkdom-bot[bot]"
+          git config user.email "${{ secrets.BOT_APP_ID }}+belastrijkdom-bot[bot]@users.noreply.github.com"
+
+      - name: Run Claude self-correction
+        uses: anthropics/claude-code-action@a92e7c70a4da9793dc164451d829089dc057a464
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ steps.app-token.outputs.token }}
+          system_prompt: |
+            You are an automated agent for BelastRijkdom.nl. Always read AGENTS.md in full
+            before taking any action. Never push directly to main. Never merge pull requests.
+            Never modify files under .github/workflows/. Branch naming: agent/issue-{N}.
+            All commits must use conventional commit format: type(scope): message.
+          prompt: |
+            CI failed on branch ${{ github.event.workflow_run.head_branch }}. Failure output:
+            ---
+            ${{ steps.ci-log.outputs.log }}
+            ---
+
+            Fix the root cause. Do not suppress the check. Push the fix to the same branch
+            (${{ github.event.workflow_run.head_branch }}). Do not open a new PR — one already exists.
