@@ -13,6 +13,8 @@ BelastRijkdom.nl is a Netherlands-focused activist site arguing for shifting tax
 - `"type": "commonjs"` in `package.json` — all JS config and script files use `module.exports` / `require()`, never `import`/`export`.
 - No `>/dev/null 2>&1` — failures must be visible.
 - FOSS-only tooling. Flag any exception explicitly.
+- **Conventional commits:** use the format `type(scope): message`. Valid types: `feat`, `fix`, `docs`, `test`, `refactor`, `perf`, `chore`, `ci`, `security`. Include a scope when it makes sense — use a topic scope (e.g. `build`, `i18n`, `content`, `a11y`, `deps`). Omit the scope only when no single topic fits.
+- **Merge via rebase + fast-forward only.** Never create merge commits. Before merging a feature branch: `git rebase main`, then `git checkout main && git merge --ff-only <branch>`.
 
 ## Validation loop
 
