@@ -14,6 +14,16 @@ A human decides on merge.
 
 ---
 
+## Engineering rules
+
+- Never use `superpowers` in a folder name for docs, specs, designs, or implementation plans.
+- **Spec and plan filenames do not include a date prefix.** Save them as `docs/specs/<topic>.md` and `docs/plans/<topic>.md`, not `docs/specs/YYYY-MM-DD-<topic>.md`.
+- `"type": "commonjs"` — all JS files use `module.exports` / `require()`, never `import`/`export`.
+- No `>/dev/null 2>&1` — failures must be visible.
+- FOSS-only tooling. Flag any exception explicitly.
+
+---
+
 ## What agents may do
 
 - Create feature branches (naming: `agent/issue-{number}`)
