@@ -1,0 +1,62 @@
+name: Agent task
+description: A structured task for an AI agent to execute
+labels: ["agent:task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Fill in all sections. The agent reads this issue verbatim — vague
+        requirements produce vague PRs.
+
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: One sentence. What should exist or work after this task is done?
+      placeholder: "Add an English translation of the privacy page at /en/privacy/."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: |
+        Numbered list of verifiable conditions. Each item must be checkable
+        by running the validation loop or inspecting build output.
+      placeholder: |
+        1. `dest/en/privacy/index.html` exists after `npm run build`
+        2. The page has `lang="en"` on the html element
+        3. `npm run test:e2e` passes
+    validations:
+      required: true
+
+  - type: textarea
+    id: files
+    attributes:
+      label: Files to touch
+      description: List the files the agent should create or modify.
+      placeholder: |
+        Create: src/en/privacy.njk
+        Modify: (none)
+    validations:
+      required: false
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: Anything the agent must not do, or edge cases to avoid.
+      placeholder: "Do not add unsourced figures. Keep the same layout as the NL version."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Agent pre-flight checklist
+      options:
+        - label: I have read AGENTS.md
+          required: true
+        - label: All acceptance criteria are verifiable by the validation loop
+          required: true
