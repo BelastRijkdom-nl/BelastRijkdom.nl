@@ -28,13 +28,13 @@ GitHub → Settings → Developer settings → GitHub Apps → New GitHub App.
 
 **Permissions (repository, exact — grant nothing else):**
 
-| Permission | Level |
-|---|---|
-| Contents | Read and write |
+| Permission    | Level          |
+| ------------- | -------------- |
+| Contents      | Read and write |
 | Pull requests | Read and write |
-| Issues | Read-only |
-| Actions | Read-only |
-| Metadata | Read-only |
+| Issues        | Read-only      |
+| Actions       | Read-only      |
+| Metadata      | Read-only      |
 
 Do not grant: Checks, Administration, Secrets, Workflows, or any organisation-level permission.
 
@@ -54,25 +54,25 @@ Repository → Settings → Environments → New environment → name it `agent`
 
 Add these three secrets to the `agent` environment (not to repository secrets):
 
-| Secret | Value |
-|---|---|
-| `BOT_APP_ID` | Numeric App ID shown on the App's settings page |
-| `BOT_PRIVATE_KEY` | Contents of the downloaded `.pem` file |
+| Secret              | Value                                                                   |
+| ------------------- | ----------------------------------------------------------------------- |
+| `BOT_APP_ID`        | Numeric App ID shown on the App's settings page                         |
+| `BOT_PRIVATE_KEY`   | Contents of the downloaded `.pem` file                                  |
 | `ANTHROPIC_API_KEY` | Anthropic API key with a hard spending cap set in the Anthropic console |
 
 ### 5. Set branch ruleset on `main`
 
 Repository → Settings → Rules → Rulesets → New ruleset → Branch ruleset.
 
-| Setting | Value |
-|---|---|
-| Target | `refs/heads/main` |
-| Require a pull request before merging | Yes — 0 required approvals (increase at L3) |
-| Required status checks | `Build and test` (the `test` job from the `CI` workflow) — mark as required |
-| Require branches to be up to date before merging | Yes |
-| Block force pushes | Yes |
-| Restrict deletions | Yes |
-| Bypass list | **Empty — nobody, including the bot** |
+| Setting                                          | Value                                                                       |
+| ------------------------------------------------ | --------------------------------------------------------------------------- |
+| Target                                           | `refs/heads/main`                                                           |
+| Require a pull request before merging            | Yes — 0 required approvals (increase at L3)                                 |
+| Required status checks                           | `Build and test` (the `test` job from the `CI` workflow) — mark as required |
+| Require branches to be up to date before merging | Yes                                                                         |
+| Block force pushes                               | Yes                                                                         |
+| Restrict deletions                               | Yes                                                                         |
+| Bypass list                                      | **Empty — nobody, including the bot**                                       |
 
 The empty bypass list is the structural guarantee: Contents: Write on the App allows the bot to push to `agent/*` branches but branch protection prevents any direct push to `main`, regardless of what the agent attempts.
 
@@ -82,11 +82,11 @@ The empty bypass list is the structural guarantee: Contents: Write on the App al
 
 ### Triggers
 
-| Event | Filter | Action |
-|---|---|---|
-| `issues.labeled` | `github.event.label.name == 'agent:task'` | Headless task run |
-| `issue_comment.created` | comment body contains `@claude` | Interactive response |
-| `pull_request_review_comment.created` | comment body contains `@claude` | Interactive response |
+| Event                                 | Filter                                    | Action               |
+| ------------------------------------- | ----------------------------------------- | -------------------- |
+| `issues.labeled`                      | `github.event.label.name == 'agent:task'` | Headless task run    |
+| `issue_comment.created`               | comment body contains `@claude`           | Interactive response |
+| `pull_request_review_comment.created` | comment body contains `@claude`           | Interactive response |
 
 `@claude` mention triggers are gated on `github.event.comment.author_association ∈ {OWNER, MEMBER, COLLABORATOR}`. Comments from public users are ignored — this is the primary prompt-injection guard for the mention path.
 
@@ -171,29 +171,30 @@ No workflow step dumps the environment (`env`, `printenv`). The CI log fetched f
 
 ### Residual risk and mitigations
 
-| Risk | Mitigation |
-|---|---|
-| Encoded/transformed secret variants not masked | No env-dump steps; no base64 transformations of secrets |
-| Derived JWT (used to fetch installation token) not masked | Transient, never written to a log step |
-| Installation token leaked | Expires in 1 hour |
-| `ANTHROPIC_API_KEY` leaked | Hard spending cap in Anthropic console limits financial exposure |
-| Supply chain (action tag mutated) | Both workflows pin `claude-code-action` to a specific commit SHA |
-| Secrets accessible to unrelated workflows | Secrets live in the `agent` environment, not repo-level secrets |
+| Risk                                                      | Mitigation                                                       |
+| --------------------------------------------------------- | ---------------------------------------------------------------- |
+| Encoded/transformed secret variants not masked            | No env-dump steps; no base64 transformations of secrets          |
+| Derived JWT (used to fetch installation token) not masked | Transient, never written to a log step                           |
+| Installation token leaked                                 | Expires in 1 hour                                                |
+| `ANTHROPIC_API_KEY` leaked                                | Hard spending cap in Anthropic console limits financial exposure |
+| Supply chain (action tag mutated)                         | Both workflows pin `claude-code-action` to a specific commit SHA |
+| Secrets accessible to unrelated workflows                 | Secrets live in the `agent` environment, not repo-level secrets  |
 
 ### Prompt injection
 
-| Attack surface | Guard |
-|---|---|
+| Attack surface                                          | Guard                                                                              |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | Public user crafts malicious issue body (label trigger) | `agent:task` label requires write access to apply — public users cannot trigger it |
-| Public user posts malicious `@claude` comment | `author_association` check gates mentions to OWNER / MEMBER / COLLABORATOR |
-| Agent tries to push to `main` | Branch ruleset blocks it at the platform level regardless of prompt instructions |
-| Agent tries to modify `.github/workflows/` | System prompt forbids it; App has no `Workflows` permission |
+| Public user posts malicious `@claude` comment           | `author_association` check gates mentions to OWNER / MEMBER / COLLABORATOR         |
+| Agent tries to push to `main`                           | Branch ruleset blocks it at the platform level regardless of prompt instructions   |
+| Agent tries to modify `.github/workflows/`              | System prompt forbids it; App has no `Workflows` permission                        |
 
 ---
 
 ## Git identity stability
 
 The bot's git identity is derived from two permanent values:
+
 - `user.name`: hardcoded string in the workflow YAML
 - `user.email`: `{BOT_APP_ID}+{slug}[bot]@users.noreply.github.com` where `BOT_APP_ID` is the permanent numeric App ID
 

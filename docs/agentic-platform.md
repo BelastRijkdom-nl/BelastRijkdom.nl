@@ -20,16 +20,16 @@ _Living document. Updated when the platform level or architecture changes._
 
 ## Stack
 
-| Layer        | Tool                          | Notes                                  |
-| ------------ | ----------------------------- | -------------------------------------- |
-| SSG          | Eleventy 3.x                  | Nunjucks templates, PostCSS transforms |
-| i18n         | EleventyI18nPlugin (built-in) | /nl/ and /en/ URL prefixes             |
-| CSS          | PostCSS + postcss-preset-env  | Custom media queries polyfilled        |
-| Hosting      | GitHub Pages                  | Free tier; deploy via Actions          |
-| CI           | GitHub Actions                | Free tier (~2 000 min/month)           |
-| Unit tests   | Vitest 2.x                    | Tests build output correctness         |
-| E2E + a11y   | Playwright + axe-playwright   | Runs against built dest/               |
-| Schema       | AJV 8 + ajv-formats           | Validates src/\_data/claims/\*.json    |
+| Layer        | Tool                             | Notes                                                   |
+| ------------ | -------------------------------- | ------------------------------------------------------- |
+| SSG          | Eleventy 3.x                     | Nunjucks templates, PostCSS transforms                  |
+| i18n         | EleventyI18nPlugin (built-in)    | /nl/ and /en/ URL prefixes                              |
+| CSS          | PostCSS + postcss-preset-env     | Custom media queries polyfilled                         |
+| Hosting      | GitHub Pages                     | Free tier; deploy via Actions                           |
+| CI           | GitHub Actions                   | Free tier (~2 000 min/month)                            |
+| Unit tests   | Vitest 2.x                       | Tests build output correctness                          |
+| E2E + a11y   | Playwright + axe-playwright      | Runs against built dest/                                |
+| Schema       | AJV 8 + ajv-formats              | Validates src/\_data/claims/\*.json                     |
 | Bot identity | GitHub App (`belastrijkdom-bot`) | Scoped, short-lived tokens; `agent` Actions environment |
 
 ---
@@ -79,6 +79,7 @@ A custom GitHub App (`belastrijkdom-bot`) with a permanent numeric App ID
 stored as `BOT_APP_ID` in the `agent` Actions environment.
 
 **Repository permissions:**
+
 - Contents: Read and write
 - Pull requests: Read and write
 - Issues: Read-only
@@ -92,6 +93,7 @@ Private key stored as `BOT_PRIVATE_KEY` in the `agent` Actions environment (not 
 `{APP_ID}+belastrijkdom-bot[bot]@users.noreply.github.com`
 
 **Workflows using this identity:**
+
 - `.github/workflows/agent-dispatch.yml` — issue label and @claude mention triggers
 - `.github/workflows/agent-self-correct.yml` — CI failure self-correction on `agent/*` branches
 

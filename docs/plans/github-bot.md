@@ -52,12 +52,12 @@ Modified:
 
   Set **Repository permissions** (everything else leave as None):
 
-  | Permission    | Level          |
-  |---------------|----------------|
-  | Contents      | Read and write |
-  | Pull requests | Read and write |
-  | Issues        | Read-only      |
-  | Actions       | Read-only      |
+  | Permission    | Level                                  |
+  | ------------- | -------------------------------------- |
+  | Contents      | Read and write                         |
+  | Pull requests | Read and write                         |
+  | Issues        | Read-only                              |
+  | Actions       | Read-only                              |
   | Metadata      | Read-only (mandatory, always included) |
 
   Click "Create GitHub App". Note the **App ID** (numeric) shown on the app settings page — you'll need it in Step 4.
@@ -76,10 +76,10 @@ Modified:
 
   Under "Environment secrets", add all three (do NOT add these as repository secrets):
 
-  | Secret name       | Value |
-  |-------------------|-------|
-  | `BOT_APP_ID`      | The numeric App ID from Step 1 |
-  | `BOT_PRIVATE_KEY` | Full contents of the `.pem` file from Step 3 (including `-----BEGIN RSA PRIVATE KEY-----` header and footer) |
+  | Secret name         | Value                                                                                                                    |
+  | ------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+  | `BOT_APP_ID`        | The numeric App ID from Step 1                                                                                           |
+  | `BOT_PRIVATE_KEY`   | Full contents of the `.pem` file from Step 3 (including `-----BEGIN RSA PRIVATE KEY-----` header and footer)             |
   | `ANTHROPIC_API_KEY` | Your Anthropic API key — set a hard monthly spending cap in the [Anthropic console](https://console.anthropic.com) first |
 
   Delete the local `.pem` file now.
@@ -88,17 +88,17 @@ Modified:
 
   Go to: Repository → Settings → Rules → Rulesets → New ruleset → Branch ruleset.
 
-  | Setting | Value |
-  |---------|-------|
-  | Name | `main protection` |
-  | Enforcement status | Active |
-  | Target branches | Add target → `refs/heads/main` |
-  | Require a pull request before merging | ✓ — Required approvals: 0 |
-  | Require status checks to pass | ✓ → Add check → type `Build and test` → select it from the dropdown (it appears after at least one CI run) |
-  | Require branches to be up to date before merging | ✓ |
-  | Block force pushes | ✓ |
-  | Restrict deletions | ✓ |
-  | Bypass list | **Leave empty — nobody bypasses, including the bot** |
+  | Setting                                          | Value                                                                                                      |
+  | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
+  | Name                                             | `main protection`                                                                                          |
+  | Enforcement status                               | Active                                                                                                     |
+  | Target branches                                  | Add target → `refs/heads/main`                                                                             |
+  | Require a pull request before merging            | ✓ — Required approvals: 0                                                                                  |
+  | Require status checks to pass                    | ✓ → Add check → type `Build and test` → select it from the dropdown (it appears after at least one CI run) |
+  | Require branches to be up to date before merging | ✓                                                                                                          |
+  | Block force pushes                               | ✓                                                                                                          |
+  | Restrict deletions                               | ✓                                                                                                          |
+  | Bypass list                                      | **Leave empty — nobody bypasses, including the bot**                                                       |
 
   Save ruleset.
 
@@ -109,9 +109,11 @@ Modified:
 ## Task 2: `agent-dispatch.yml`
 
 **Files:**
+
 - Create: `.github/workflows/agent-dispatch.yml`
 
 **Interfaces:**
+
 - Consumes: `agent` environment secrets (`BOT_APP_ID`, `BOT_PRIVATE_KEY`, `ANTHROPIC_API_KEY`) from Task 1
 - Produces: agent runs triggered by `agent:task` label or `@claude` mention; bot commits appear as `belastrijkdom-bot[bot]` in git history
 
@@ -247,9 +249,11 @@ Modified:
 ## Task 3: `agent-self-correct.yml`
 
 **Files:**
+
 - Create: `.github/workflows/agent-self-correct.yml`
 
 **Interfaces:**
+
 - Consumes: `agent` environment secrets from Task 1; `anthropics/claude-code-action` SHA pinned in Task 2 Step 1
 - Produces: automatic fix attempt pushed to an `agent/*` branch whenever the `CI` workflow fails on it; re-triggers CI
 
@@ -262,10 +266,10 @@ Modified:
 
   on:
     workflow_run:
-      workflows: ["CI"]
+      workflows: ['CI']
       types: [completed]
       branches:
-        - "agent/**"
+        - 'agent/**'
 
   permissions:
     contents: read
@@ -365,6 +369,7 @@ Modified:
   3. Claude fetches the log, pushes a fix to `agent/issue-0`, CI re-runs
 
   Clean up:
+
   ```bash
   gh pr close <PR number> --delete-branch
   ```
@@ -374,9 +379,11 @@ Modified:
 ## Task 4: Update platform docs
 
 **Files:**
+
 - Modify: `docs/agentic-platform.md`
 
 **Interfaces:**
+
 - Consumes: actual app slug and permissions set in Task 1
 
 - [ ] **Step 1: Update the bot identity section in `docs/agentic-platform.md`**
@@ -390,6 +397,7 @@ Modified:
   stored as `BOT_APP_ID` in the `agent` Actions environment.
 
   **Repository permissions:**
+
   - Contents: Read and write
   - Pull requests: Read and write
   - Issues: Read-only
@@ -403,6 +411,7 @@ Modified:
   `{APP_ID}+belastrijkdom-bot[bot]@users.noreply.github.com`
 
   **Workflows using this identity:**
+
   - `.github/workflows/agent-dispatch.yml` — issue label and @claude mention triggers
   - `.github/workflows/agent-self-correct.yml` — CI failure self-correction on `agent/*` branches
   ```
