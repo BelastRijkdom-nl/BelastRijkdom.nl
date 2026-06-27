@@ -35,16 +35,17 @@ jobs:
         run: |
           set -euo pipefail
           gh run view ${{ github.event.workflow_run.id }} --log-failed 2>&1 | head -300 > /tmp/ci-failure.log
+          EOF_DELIM="EOF_$(openssl rand -hex 8)"
           {
-            echo 'log<<EOF_LOG'
+            echo "log<<${EOF_DELIM}"
             cat /tmp/ci-failure.log
-            echo 'EOF_LOG'
+            echo "${EOF_DELIM}"
           } >> "$GITHUB_OUTPUT"
 
       - name: Checkout failing branch
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: ${{ github.event.workflow_run.head_sha }}
           token: ${{ steps.app-token.outputs.token }}
 
       - name: Configure git identity
