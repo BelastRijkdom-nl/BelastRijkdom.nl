@@ -32,7 +32,7 @@ GitHub → Settings → Developer settings → GitHub Apps → New GitHub App.
 | ------------- | -------------- |
 | Contents      | Read and write |
 | Pull requests | Read and write |
-| Issues        | Read-only      |
+| Issues        | Read and write |
 | Actions       | Read-only      |
 | Metadata      | Read-only      |
 
@@ -119,7 +119,8 @@ Implement the task described in issue #N.
 2. Make the minimal change that satisfies the issue
 3. Run the full validation loop:
      npm run build && npm test && npm run test:schema &&
-     npm run test:e2e && npm audit --audit-level=critical --omit=dev
+     npm run test:e2e && npm run lint &&
+     npm audit --audit-level=critical --omit=dev
 4. Fix any failures before proceeding — never suppress a check
 5. Open a PR: gh pr create referencing "Closes #N"
 ```

@@ -82,7 +82,7 @@ stored as `BOT_APP_ID` in the `agent` Actions environment.
 
 - Contents: Read and write
 - Pull requests: Read and write
-- Issues: Read-only
+- Issues: Read and write
 - Actions: Read-only
 - Metadata: Read-only
 
