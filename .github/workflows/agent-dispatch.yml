@@ -52,6 +52,8 @@ jobs:
           if [ "${{ github.event_name }}" = "issues" ]; then
             {
               echo 'prompt<<EOF_PROMPT'
+              echo "Read AGENTS.md in full before taking any action."
+              echo ""
               echo "Implement the task described in issue #${{ github.event.issue.number }}."
               echo ""
               echo "1. Create branch agent/issue-${{ github.event.issue.number }}"
@@ -73,9 +75,8 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ steps.app-token.outputs.token }}
-          system_prompt: |
-            You are an automated agent for BelastRijkdom.nl. Always read AGENTS.md in full
-            before taking any action. Never push directly to main. Never merge pull requests.
-            Never modify files under .github/workflows/. Branch naming: agent/issue-{N}.
-            All commits must use conventional commit format: type(scope): message.
           prompt: ${{ steps.task.outputs.prompt }}
+          claude_args: >-
+            --allowedTools
+            "Bash(gh issue),Bash(gh pr),Bash(gh api),Bash(git),Bash(npm),Edit,Write"
+          show_full_output: true

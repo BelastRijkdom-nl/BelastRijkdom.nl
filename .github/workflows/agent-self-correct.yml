@@ -58,12 +58,9 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ steps.app-token.outputs.token }}
-          system_prompt: |
-            You are an automated agent for BelastRijkdom.nl. Always read AGENTS.md in full
-            before taking any action. Never push directly to main. Never merge pull requests.
-            Never modify files under .github/workflows/. Branch naming: agent/issue-{N}.
-            All commits must use conventional commit format: type(scope): message.
           prompt: |
+            Read AGENTS.md in full before taking any action.
+
             CI failed on branch ${{ github.event.workflow_run.head_branch }}. Failure output:
             ---
             ${{ steps.ci-log.outputs.log }}
@@ -71,3 +68,7 @@ jobs:
 
             Fix the root cause. Do not suppress the check. Push the fix to the same branch
             (${{ github.event.workflow_run.head_branch }}). Do not open a new PR — one already exists.
+          claude_args: >-
+            --allowedTools
+            "Bash(gh issue),Bash(gh pr),Bash(gh api),Bash(git),Bash(npm),Edit,Write"
+          show_full_output: true
