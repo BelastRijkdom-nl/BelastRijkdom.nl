@@ -28,6 +28,18 @@ test.describe('Dutch site (/nl/)', () => {
     await expect(enLink).toHaveAttribute('href', /\/en\//)
   })
 
+  test('self-referencing hreflang alternate', async ({ page }) => {
+    const selfLink = page.locator('link[rel="alternate"][hreflang="nl"]')
+    await expect(selfLink).toHaveAttribute('href', '/nl/')
+  })
+
+  test('x-default hreflang alternate points to root', async ({ page }) => {
+    const defaultLink = page.locator(
+      'link[rel="alternate"][hreflang="x-default"]',
+    )
+    await expect(defaultLink).toHaveAttribute('href', '/')
+  })
+
   test('no axe accessibility violations', async ({ page }) => {
     await checkA11y(page, undefined, {
       detailedReport: true,
@@ -61,6 +73,18 @@ test.describe('English site (/en/)', () => {
     const nlLink = page.locator('a[hreflang="nl"]').first()
     await expect(nlLink).toBeVisible()
     await expect(nlLink).toHaveAttribute('href', /\/nl\//)
+  })
+
+  test('self-referencing hreflang alternate', async ({ page }) => {
+    const selfLink = page.locator('link[rel="alternate"][hreflang="en"]')
+    await expect(selfLink).toHaveAttribute('href', '/en/')
+  })
+
+  test('x-default hreflang alternate points to root', async ({ page }) => {
+    const defaultLink = page.locator(
+      'link[rel="alternate"][hreflang="x-default"]',
+    )
+    await expect(defaultLink).toHaveAttribute('href', '/')
   })
 
   test('no axe accessibility violations', async ({ page }) => {
