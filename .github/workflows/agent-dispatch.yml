@@ -29,6 +29,11 @@ jobs:
       contains(github.event.comment.body, '@claude') &&
       contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association))
     steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2
+        with:
+          egress-policy: audit
+
       - name: Generate GitHub App token
         id: app-token
         uses: actions/create-github-app-token@v1
@@ -77,4 +82,3 @@ jobs:
           github_token: ${{ steps.app-token.outputs.token }}
           prompt: ${{ steps.task.outputs.prompt }}
           claude_args: '--allowedTools "Bash(*),Edit,Write"'
-          show_full_output: true
