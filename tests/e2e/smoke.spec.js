@@ -22,6 +22,14 @@ test.describe('Dutch site (/nl/)', () => {
     expect(lang).toBe('nl')
   })
 
+  test('localized meta description', async ({ page }) => {
+    const description = page.locator('meta[name="description"]')
+    await expect(description).toHaveAttribute(
+      'content',
+      'BelastRijkdom.nl pleit voor het verschuiven van belastingen van arbeid naar vermogen — want rijkdom groeit onbelast terwijl werkenden de rekening betalen.',
+    )
+  })
+
   test('language switcher links to /en/', async ({ page }) => {
     const enLink = page.locator('a[hreflang="en"]').first()
     await expect(enLink).toBeVisible()
@@ -67,6 +75,14 @@ test.describe('English site (/en/)', () => {
   test('html lang attribute is en', async ({ page }) => {
     const lang = await page.locator('html').getAttribute('lang')
     expect(lang).toBe('en')
+  })
+
+  test('localized meta description', async ({ page }) => {
+    const description = page.locator('meta[name="description"]')
+    await expect(description).toHaveAttribute(
+      'content',
+      'BelastRijkdom.nl advocates shifting taxation from labour onto wealth — because wealth accumulates untaxed while workers foot the bill.',
+    )
   })
 
   test('language switcher links to /nl/', async ({ page }) => {
