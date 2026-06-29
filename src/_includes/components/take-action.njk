@@ -1,0 +1,37 @@
+{# Take Action — three tiers of increasing effort. Copy is passed in via the
+   `t` translations object so the structure stays language-agnostic and can be
+   lifted into a standalone /actie page later without restructuring.
+   Import with context so `site` is available for the share URLs. #}
+{% macro takeAction(t) %}
+{% set shareUrl = site.url %}
+<section class="take-action" aria-labelledby="take-action-heading">
+  <h2 id="take-action-heading">{{ t.heading }}</h2>
+
+  <div class="tier">
+    <h3 class="tier__title"><span class="tier__num">1</span> {{ t.tier1.title }}</h3>
+    <p>{{ t.tier1.lead }}</p>
+    <blockquote class="tier__quote">{{ t.tier1.talkingPoint }}</blockquote>
+    <ul class="tier__actions">
+      <li><a href="https://wa.me/?text={{ t.tier1.talkingPoint | urlencode }}%20{{ shareUrl | urlencode }}" rel="noopener noreferrer">{{ t.tier1.whatsapp }}</a></li>
+      <li><a href="https://twitter.com/intent/tweet?text={{ t.tier1.talkingPoint | urlencode }}&url={{ shareUrl | urlencode }}" rel="noopener noreferrer">{{ t.tier1.twitter }}</a></li>
+      <li><a href="https://www.linkedin.com/sharing/share-offsite/?url={{ shareUrl | urlencode }}" rel="noopener noreferrer">{{ t.tier1.linkedin }}</a></li>
+    </ul>
+  </div>
+
+  <div class="tier">
+    <h3 class="tier__title"><span class="tier__num">2</span> {{ t.tier2.title }}</h3>
+    <p>{{ t.tier2.lead }}</p>
+    {# TODO: update petition link — no active NL wealth-tax petition confirmed at build time; points to Oxfam Novib campaigns as a best-effort placeholder. #}
+    <p class="tier__actions"><a href="https://www.oxfamnovib.nl/campagnes" rel="noopener noreferrer">{{ t.tier2.linkText }}</a></p>
+  </div>
+
+  <div class="tier">
+    <h3 class="tier__title"><span class="tier__num">3</span> {{ t.tier3.title }}</h3>
+    <p>{{ t.tier3.lead }}</p>
+    <p class="tier__actions">
+      <a href="https://www.tweedekamer.nl/kamerleden_en_commissies/alle_kamerleden" rel="noopener noreferrer">{{ t.tier3.linkText }}</a>
+      <a href="mailto:?subject={{ t.tier3.mailSubject | urlencode }}&body={{ t.tier3.mailBody | urlencode }}">{{ t.tier3.mailLinkText }}</a>
+    </p>
+  </div>
+</section>
+{% endmacro %}

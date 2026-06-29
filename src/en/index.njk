@@ -4,6 +4,55 @@ metaTitle: Tax Wealth
 bodyClass: index
 ---
 
-<h1 style="margin-top: 10em; text-align: center; font-family: sans-serif; font-size: 1.4em; font-weight: normal;">
-  <strong>Tax wealth, not labour.</strong>
-</h1>
+{% import 'components/fact-card.njk' as facts with context %}
+{% import 'components/take-action.njk' as action with context %}
+
+<section class="hero">
+  <p class="hero__kicker">Tax wealth, not labour.</p>
+  <h1 class="hero__title"><strong>Life has gotten more expensive. But not for everyone.</strong></h1>
+  <p class="hero__lead">Housing unaffordable. Wages falling behind. Meanwhile the wealth of the richest grows faster than ever. That's not a coincidence — it's <strong>policy</strong>.</p>
+</section>
+
+<section class="facts" aria-labelledby="facts-heading">
+  <h2 id="facts-heading">The numbers</h2>
+  <div class="facts__grid">
+    {{ facts.factCard("26%", "The richest 1%", "The richest 1% owns more than a quarter of all wealth in the Netherlands.", "vermogensongelijkheid-2023") }}
+    {{ facts.factCard("48% → 26%", "Tax on wealth has fallen for decades", "While the top rate on wealth and capital kept dropping, the tax on labour stayed high.", "kapitaalbelasting-trend") }}
+    {{ facts.factCard("€ billions", "It can be different", "If wealth were taxed more fairly, the tax on labour could come down — and there would be more money for healthcare, education and social security.", "vermogensbelasting-opbrengst") }}
+  </div>
+</section>
+
+<section class="prose" aria-labelledby="prose-heading">
+  <h2 id="prose-heading">What is this about?</h2>
+  <p>Many people sense that something is off. Groceries cost more, buying a home is out of reach, and there is little left at the end of the month. You work hard and yet it never seems to be enough.</p>
+  <p>This is not about where people come from. For decades wealth has been piling up at the top while the bill is shifted onto working people. The richest 1% now owns more than a quarter of all wealth in the Netherlands — while the tax burden falls mostly on your payslip.</p>
+  <p>“But won't rich people just leave if you tax them?” Most wealth is tied up in homes and businesses here — you can't simply take that abroad. And if it is sold, it becomes available to others.</p>
+  <p>The good news: this is solvable. We made the choices that led here, so we can make different ones. That is what this site is about — and below you'll find what you can do yourself.</p>
+</section>
+
+{% set t = {
+  "heading": "Take action",
+  "tier1": {
+    "title": "Talk about it",
+    "lead": "The most powerful campaign starts in a conversation. Share this point with someone you know.",
+    "talkingPoint": "Life is getting more expensive for working people, while the wealth of the richest keeps growing untaxed. That's not a coincidence — it's policy. And policy can be changed.",
+    "whatsapp": "Share on WhatsApp",
+    "twitter": "Share on X",
+    "linkedin": "Share on LinkedIn"
+  },
+  "tier2": {
+    "title": "Sign a petition",
+    "lead": "It takes thirty seconds: add your name to the call for fairer taxation of wealth.",
+    "linkText": "Find an active petition at Oxfam Novib"
+  },
+  "tier3": {
+    "title": "Take action",
+    "lead": "Make your voice heard in politics. Find a member of parliament and send a short message.",
+    "linkText": "See all members of parliament",
+    "mailLinkText": "Open a template email",
+    "mailSubject": "Shift taxation from labour to wealth",
+    "mailBody": "Dear Member of Parliament,\n\nI am concerned about the growing concentration of wealth in the Netherlands. Working people pay relatively high taxes, while large fortunes are taxed lightly. I urge you to work towards fairer taxation of wealth, so that the tax on labour can come down.\n\nKind regards,"
+  }
+} %}
+
+{{ action.takeAction(t) }}

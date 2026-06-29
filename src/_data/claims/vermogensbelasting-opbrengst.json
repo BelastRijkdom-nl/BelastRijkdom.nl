@@ -1,0 +1,17 @@
+{
+  "id": "vermogensbelasting-opbrengst",
+  "claim": {
+    "nl": "Een evenwichtiger belasting van grote vermogens kan jaarlijks miljarden euro's opleveren — geld waarmee de belasting op werk omlaag kan en meer ruimte ontstaat voor zorg, onderwijs en sociale zekerheid.",
+    "en": "Taxing large fortunes more fairly could raise billions of euros a year — money that could lower the tax on labour and free up room for healthcare, education and social security."
+  },
+  "value": 4000000000,
+  "unit": "euro-per-year-conservative-estimate",
+  "source": {
+    "name": "IBO Vermogensverdeling (Ministerie van Financiën, 2022)",
+    "url": "https://www.rijksoverheid.nl/documenten/rapporten/2022/07/08/ibo-vermogensverdeling",
+    "accessed": "2026-06-29",
+    "type": "primary"
+  },
+  "verified": false,
+  "lastChecked": "2026-06-29"
+}

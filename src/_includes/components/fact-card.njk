@@ -1,0 +1,16 @@
+{# Fact card — one bold statistic, a label, a sentence of context, and a
+   "bron"/"source" link derived from the matching file in src/_data/claims/.
+   Import with context so `claims` and `lang` are available. #}
+{% macro factCard(stat, label, context, claimId) %}
+<article class="fact-card">
+  <p class="fact-card__stat">{{ stat }}</p>
+  <h3 class="fact-card__label">{{ label }}</h3>
+  <p class="fact-card__context">{{ context }}</p>
+  {% set c = claims[claimId] %}
+  {% if c %}
+  <p class="fact-card__source">
+    <a href="{{ c.source.url }}" rel="noopener noreferrer">{% if lang == 'en' %}Source{% else %}Bron{% endif %}: {{ c.source.name }}</a>
+  </p>
+  {% endif %}
+</article>
+{% endmacro %}

@@ -12,7 +12,7 @@ test.describe('Dutch site (/nl/)', () => {
   })
 
   test('Dutch tagline visible', async ({ page }) => {
-    await expect(page.locator('strong').first()).toContainText(
+    await expect(page.locator('.hero__kicker')).toContainText(
       'Belast Rijkdom, niet werk',
     )
   })
@@ -67,7 +67,7 @@ test.describe('English site (/en/)', () => {
   })
 
   test('English tagline visible', async ({ page }) => {
-    await expect(page.locator('strong').first()).toContainText(
+    await expect(page.locator('.hero__kicker')).toContainText(
       'Tax wealth, not labour',
     )
   })

@@ -1,0 +1,17 @@
+{
+  "id": "kapitaalbelasting-trend",
+  "claim": {
+    "nl": "Het toptarief van de vennootschapsbelasting daalde van bijna 50% rond 1980 naar 25,8% in 2024, terwijl de belasting op werk hoog bleef.",
+    "en": "The top rate of corporate income tax fell from nearly 50% around 1980 to 25.8% in 2024, while the tax on labour stayed high."
+  },
+  "value": 0.258,
+  "unit": "fraction-top-corporate-tax-rate-2024",
+  "source": {
+    "name": "Belastingdienst — Tarieven vennootschapsbelasting",
+    "url": "https://www.belastingdienst.nl/wps/wcm/connect/nl/vennootschapsbelasting/content/hoeveel-vennootschapsbelasting-betalen",
+    "accessed": "2026-06-29",
+    "type": "primary"
+  },
+  "verified": false,
+  "lastChecked": "2026-06-29"
+}

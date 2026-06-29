@@ -1,1 +1,5 @@
-<p class="footer__copy">&copy; 2026 {{ site.name }}</p>
+{% if lang == 'en' %}
+<p class="footer__license">Code and content released under the <a href="https://opensource.org/licenses/MIT">MIT license</a>. Free to use, share, and adapt.</p>
+{% else %}
+<p class="footer__license">Code en inhoud vrijgegeven onder de <a href="https://opensource.org/licenses/MIT">MIT-licentie</a>. Vrij te gebruiken, delen en aanpassen.</p>
+{% endif %}

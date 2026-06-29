@@ -4,6 +4,55 @@ metaTitle: Belast Rijkdom
 bodyClass: index
 ---
 
-<h1 style="margin-top: 10em; text-align: center; font-family: sans-serif; font-size: 1.4em; font-weight: normal;">
-  <strong>Belast Rijkdom, niet werk.</strong>
-</h1>
+{% import 'components/fact-card.njk' as facts with context %}
+{% import 'components/take-action.njk' as action with context %}
+
+<section class="hero">
+  <p class="hero__kicker">Belast Rijkdom, niet werk.</p>
+  <h1 class="hero__title"><strong>Het leven is duurder geworden. Maar niet voor iedereen.</strong></h1>
+  <p class="hero__lead">Huizen onbetaalbaar. Lonen die achterblijven. En ondertussen groeit het vermogen van de rijksten sneller dan ooit. Dat is geen toeval — het is <strong>beleid</strong>.</p>
+</section>
+
+<section class="facts" aria-labelledby="facts-heading">
+  <h2 id="facts-heading">De cijfers</h2>
+  <div class="facts__grid">
+    {{ facts.factCard("26%", "De rijkste 1%", "De rijkste 1% bezit meer dan een kwart van al het vermogen in Nederland.", "vermogensongelijkheid-2023") }}
+    {{ facts.factCard("48% → 26%", "Belasting op vermogen daalt al decennia", "Terwijl het toptarief op vermogen en kapitaal steeds verder daalde, bleef de belasting op werk hoog.", "kapitaalbelasting-trend") }}
+    {{ facts.factCard("€ miljarden", "Het kan anders", "Als vermogen eerlijker belast wordt, kan de belasting op werk omlaag — en is er meer geld voor zorg, onderwijs en sociale zekerheid.", "vermogensbelasting-opbrengst") }}
+  </div>
+</section>
+
+<section class="prose" aria-labelledby="prose-heading">
+  <h2 id="prose-heading">Waar gaat dit over?</h2>
+  <p>Veel mensen voelen dat er iets niet klopt. De boodschappen worden duurder, een huis kopen lukt niet meer, en aan het eind van de maand blijft er weinig over. Je werkt hard en toch lijkt het nooit genoeg.</p>
+  <p>Dit gaat niet over waar mensen vandaan komen. Al decennia stapelt het vermogen zich op aan de top, terwijl de rekening steeds meer bij werkenden terechtkomt. De rijkste 1% bezit inmiddels meer dan een kwart van al het vermogen in Nederland — terwijl de belasting vooral op jouw loonstrook drukt.</p>
+  <p>“Maar rijke mensen vertrekken toch als je ze belast?” Het meeste vermogen zit vast in huizen en bedrijven hier — dat neem je niet zomaar mee naar het buitenland. En als het wél wordt verkocht, komt het beschikbaar voor anderen.</p>
+  <p>Het goede nieuws: dit is op te lossen. We hebben de keuzes gemaakt die hiertoe leidden, dus we kunnen ook andere keuzes maken. Daar gaat deze site over — en hieronder lees je wat je zelf kunt doen.</p>
+</section>
+
+{% set t = {
+  "heading": "Kom in actie",
+  "tier1": {
+    "title": "Praat erover",
+    "lead": "De krachtigste campagne begint in een gesprek. Deel dit punt met iemand die je kent.",
+    "talkingPoint": "Het leven wordt duurder voor werkenden, terwijl het vermogen van de rijksten onbelast doorgroeit. Dat is geen toeval — het is beleid. En beleid kun je veranderen.",
+    "whatsapp": "Deel via WhatsApp",
+    "twitter": "Deel op X",
+    "linkedin": "Deel op LinkedIn"
+  },
+  "tier2": {
+    "title": "Teken een petitie",
+    "lead": "Kost je dertig seconden: zet je naam onder de roep om eerlijkere belasting op vermogen.",
+    "linkText": "Vind een actieve petitie bij Oxfam Novib"
+  },
+  "tier3": {
+    "title": "Neem actie",
+    "lead": "Laat je stem horen bij de politiek. Zoek een Kamerlid en stuur een korte boodschap.",
+    "linkText": "Bekijk alle Kamerleden",
+    "mailLinkText": "Open een voorbeeldmail",
+    "mailSubject": "Verschuif de belasting van werk naar vermogen",
+    "mailBody": "Geachte heer/mevrouw,\n\nIk maak me zorgen over de groeiende vermogensongelijkheid in Nederland. Werkenden betalen relatief veel belasting, terwijl grote vermogens licht belast worden. Ik vraag u zich in te zetten voor een eerlijkere belasting op vermogen, zodat de lasten op werk omlaag kunnen.\n\nMet vriendelijke groet,"
+  }
+} %}
+
+{{ action.takeAction(t) }}
