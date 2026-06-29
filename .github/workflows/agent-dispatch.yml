@@ -81,4 +81,4 @@ jobs:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ steps.app-token.outputs.token }}
           prompt: ${{ steps.task.outputs.prompt }}
-          claude_args: '--allowedTools "Bash(*),Edit,Write"'
+          claude_args: '--allowedTools "Bash(*),Edit,Write,WebFetch"'
