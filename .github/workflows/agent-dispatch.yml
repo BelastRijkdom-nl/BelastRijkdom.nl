@@ -82,3 +82,4 @@ jobs:
           github_token: ${{ steps.app-token.outputs.token }}
           prompt: ${{ steps.task.outputs.prompt }}
           claude_args: '--allowedTools "Bash(*),Edit,Write,WebFetch"'
+          show_full_output: "true"

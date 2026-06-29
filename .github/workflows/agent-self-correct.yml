@@ -74,3 +74,4 @@ jobs:
             Fix the root cause. Do not suppress the check. Push the fix to the same branch
             (${{ github.event.workflow_run.head_branch }}). Do not open a new PR — one already exists.
           claude_args: '--allowedTools "Bash(*),Edit,Write"'
+          show_full_output: "true"
