@@ -1,0 +1,92 @@
+/* homepage: hero, fact cards, prose, take action */
+
+.hero {
+  margin-top: 2em;
+}
+.hero__kicker {
+  margin: 0 0 0.5em;
+  font-size: 0.8em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.hero__lead {
+  margin-top: 0.5em;
+}
+
+.facts {
+  margin-top: 3em;
+}
+.facts__grid {
+  display: grid;
+  gap: 1em;
+  margin-top: 1em;
+
+  @media (--medium-viewport) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.fact-card {
+  border: 1px solid var(--colorInactive);
+  border-radius: 0.25em;
+  padding: 1em;
+}
+.fact-card__stat {
+  margin: 0;
+  font-family: var(--fontStackHeader);
+  font-size: 1.8em;
+  font-weight: 500;
+  line-height: 1.1;
+}
+.fact-card__label {
+  margin: 0.3em 0 0;
+  font-size: 1.1em;
+}
+.fact-card__context {
+  margin: 0.5em 0 0;
+  font-size: 0.9em;
+}
+.fact-card__source {
+  margin: 0.75em 0 0;
+  font-size: 0.75em;
+}
+
+.prose {
+  margin-top: 3em;
+}
+
+.take-action {
+  margin-top: 3em;
+}
+.tier {
+  margin-top: 1.5em;
+}
+.tier__num {
+  display: inline-block;
+  min-width: 1.5em;
+  margin-right: 0.25em;
+  border-radius: 50%;
+  background: var(--colorOffBlack);
+  color: #fff;
+  font-size: 0.8em;
+  text-align: center;
+}
+.tier__quote {
+  font-style: italic;
+}
+.tier__actions {
+  margin-top: 0.5em;
+  padding-left: 0;
+  list-style: none;
+}
+.tier__actions li {
+  margin-top: 0.25em;
+}
+
+/* content links are distinguishable from body text, not by colour alone */
+.fact-card__source a,
+.prose a,
+.take-action a,
+.footer__license a {
+  text-decoration: underline;
+}
