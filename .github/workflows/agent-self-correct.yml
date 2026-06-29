@@ -75,3 +75,26 @@ jobs:
             (${{ github.event.workflow_run.head_branch }}). Do not open a new PR — one already exists.
           claude_args: '--allowedTools "Bash(*),Edit,Write"'
           show_full_output: 'true'
+
+      - name: Post agent cost comment
+        if: always()
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          OUTPUT_FILE="/home/runner/work/_temp/claude-execution-output.json"
+          [ -f "$OUTPUT_FILE" ] || { echo "No execution output found"; exit 0; }
+
+          RESULT=$(jq 'if type == "array" then map(select(.type == "result")) | last else . end' "$OUTPUT_FILE")
+          TURNS=$(echo "$RESULT" | jq -r '.num_turns // 0')
+          COST=$(echo "$RESULT" | jq -r '.total_cost_usd // 0' | xargs printf "%.2f")
+          MS=$(echo "$RESULT" | jq -r '.duration_ms // 0')
+          MINS=$(( MS / 60000 ))
+          SECS=$(( (MS % 60000) / 1000 ))
+
+          BRANCH="${{ github.event.workflow_run.head_branch }}"
+          ISSUE=$(echo "$BRANCH" | grep -oE '[0-9]+$')
+          [ -n "$ISSUE" ] || { echo "No issue number found in branch name"; exit 0; }
+
+          BODY=$(printf '<!-- agent-cost -->\n**Agent run** · self-correct · %s turns · $%s · %sm %ss' "$TURNS" "$COST" "$MINS" "$SECS")
+          gh issue comment "$ISSUE" --repo "${{ github.repository }}" --body "$BODY"

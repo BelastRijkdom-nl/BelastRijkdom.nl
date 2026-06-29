@@ -83,3 +83,25 @@ jobs:
           prompt: ${{ steps.task.outputs.prompt }}
           claude_args: '--allowedTools "Bash(*),Edit,Write,WebFetch"'
           show_full_output: 'true'
+
+      - name: Post agent cost comment
+        if: always()
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          set -euo pipefail
+          OUTPUT_FILE="/home/runner/work/_temp/claude-execution-output.json"
+          [ -f "$OUTPUT_FILE" ] || { echo "No execution output found"; exit 0; }
+
+          RESULT=$(jq 'if type == "array" then map(select(.type == "result")) | last else . end' "$OUTPUT_FILE")
+          TURNS=$(echo "$RESULT" | jq -r '.num_turns // 0')
+          COST=$(echo "$RESULT" | jq -r '.total_cost_usd // 0' | xargs printf "%.2f")
+          MS=$(echo "$RESULT" | jq -r '.duration_ms // 0')
+          MINS=$(( MS / 60000 ))
+          SECS=$(( (MS % 60000) / 1000 ))
+
+          ISSUE="${{ github.event.issue.number || github.event.pull_request.number }}"
+          [ -n "$ISSUE" ] || { echo "No issue number found"; exit 0; }
+
+          BODY=$(printf '<!-- agent-cost -->\n**Agent run** · dispatch · %s turns · $%s · %sm %ss' "$TURNS" "$COST" "$MINS" "$SECS")
+          gh issue comment "$ISSUE" --repo "${{ github.repository }}" --body "$BODY"
