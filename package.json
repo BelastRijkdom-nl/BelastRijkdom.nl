@@ -9,6 +9,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "test:schema": "node tests/schema/validate.js",
+    "test:links": "node tests/links/check.js",
     "lint": "prettier --check ."
   },
   "repository": {
