@@ -102,3 +102,4 @@ if (failures > 0) {
 }
 
 console.log(`\nAll ${urls.length} link(s) reachable.`)
+process.exit(0)
