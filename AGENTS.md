@@ -66,6 +66,18 @@ npm run test:e2e        # Playwright E2E + axe (serves dest/ on port 4000)
 npm audit --audit-level=critical --omit=dev
 ```
 
+## When you hit a permission wall
+
+Some actions are blocked by token scope even when explicitly authorised in the
+issue (e.g. pushing `.github/workflows/` changes requires the `workflows` OAuth
+scope, which the bot token does not have). When this happens:
+
+1. Complete everything you _can_ do and open the PR normally
+2. Add an **"⚠️ Action required by a human"** section at the bottom of the PR
+   description that names the blocked step and includes an exact, ready-to-apply
+   diff
+3. Do **not** skip the acceptance criterion silently or mark it as done
+
 ## Self-correction on CI failure
 
 CI failure output is structured. On failure:
