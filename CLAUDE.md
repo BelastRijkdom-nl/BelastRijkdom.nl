@@ -24,6 +24,7 @@ Before opening any PR, all of these must pass:
 npm run build           # Eleventy → dest/
 npm test                # Vitest unit tests (reads dest/)
 npm run test:schema     # AJV claim schema validation
+npm run test:links      # Fetch every claim source URL; fail on 4xx/5xx
 npm run test:e2e        # Playwright E2E + axe accessibility
 npm run lint            # Prettier
 npm audit --audit-level=critical --omit=dev

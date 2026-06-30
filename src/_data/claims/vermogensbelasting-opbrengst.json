@@ -8,7 +8,7 @@
   "unit": "euro-per-year-conservative-estimate",
   "source": {
     "name": "IBO Vermogensverdeling (Ministerie van Financiën, 2022)",
-    "url": "https://www.rijksoverheid.nl/documenten/rapporten/2022/07/08/ibo-vermogensverdeling",
+    "url": "https://www.rijksfinancien.nl/sites/default/files/extrainfo/ibos/IBO%20Vermogensverdeling%20rapport%20-v2.pdf",
     "accessed": "2026-06-29",
     "type": "primary"
   },
