@@ -39,6 +39,9 @@ jobs:
       - name: Schema validation
         run: npm run test:schema
 
+      - name: Link check
+        run: npm run test:links
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
